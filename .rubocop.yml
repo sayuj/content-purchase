@@ -1,0 +1,25 @@
+Style/Documentation:
+  Enabled: false
+
+inherit_mode:
+  merge:
+    - Exclude
+
+AllCops:
+  Exclude:
+    - 'Rakefile'
+    - 'config/environments/*.rb'
+    - 'bin/*'
+    - 'db/schema.rb'
+    - 'db/migrate/*.rb'
+    - 'config/initializers/content_security_policy.rb'
+    - 'lib/tasks/cucumber.rake'
+    - 'features/support/env.rb'
+    - 'script/cucumber'
+    - 'spec/spec_helper.rb'
+
+Metrics/BlockLength:
+  ExcludedMethods: ['describe', 'context']
+
+Style/NumericPredicate:
+  Enabled: false
