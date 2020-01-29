@@ -16,11 +16,13 @@ ActiveRecord::Schema.define(version: 2020_01_24_142732) do
   enable_extension "plpgsql"
 
   create_table "episodes", force: :cascade do |t|
+    t.bigint "season_id"
     t.string "title"
     t.integer "number"
     t.text "plot"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["season_id"], name: "index_episodes_on_season_id"
   end
 
   create_table "movies", force: :cascade do |t|
