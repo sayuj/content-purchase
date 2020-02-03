@@ -7,10 +7,16 @@ class PurchasesController < ApplicationController
     if @purchase.valid?
       key = "purchases:#{@purchase.user_id}:"\
             "#{@purchase.content_type}:#{@purchase.content_id}"
-      REDIS.set(key, {
-                  title: @purchase.content.title,
-                  expiry: @purchase.expire_at.to_i
-                },
+      data = {
+        title: @purchase.content.title,
+        expiry: @purchase.expire_at.to_i,
+        content_type: @purchase.content_type
+      }
+      if @purchase.content.is_a?(Season)
+        data[:number] = @purchase.content.number
+      end
+
+      REDIS.set(key, data,
                 ex: Purchase::EXPIRY_DURATION)
     end
   end

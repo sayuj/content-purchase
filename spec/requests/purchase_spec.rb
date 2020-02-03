@@ -234,7 +234,8 @@ RSpec.describe 'Purchase API', type: :request do
         "purchases:#{user.id}:Movie:#{movie1.id}",
         {
           title: movie1.title,
-          expiry: Purchase::EXPIRY_DURATION.from_now.to_i
+          expiry: Purchase::EXPIRY_DURATION.from_now.to_i,
+          content_type: 'Movie'
         },
         ex: Purchase::EXPIRY_DURATION
       )
@@ -262,7 +263,9 @@ RSpec.describe 'Purchase API', type: :request do
         "purchases:#{user.id}:Season:#{season1.id}",
         {
           title: season1.title,
-          expiry: Purchase::EXPIRY_DURATION.from_now.to_i
+          expiry: Purchase::EXPIRY_DURATION.from_now.to_i,
+          content_type: 'Season',
+          number: season1.number
         },
         ex: Purchase::EXPIRY_DURATION
       )

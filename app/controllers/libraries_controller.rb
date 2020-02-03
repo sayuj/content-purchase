@@ -8,7 +8,6 @@ class LibrariesController < ApplicationController
     end
 
     @library.sort_by! { |element| element['expiry'] }
-    render json: @library
   end
 
   def user
