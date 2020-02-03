@@ -3,4 +3,7 @@ Rails.application.routes.draw do
   resources :seasons
   resources :contents
   resources :purchases
+  resources :users do
+    resource :library
+  end
 end

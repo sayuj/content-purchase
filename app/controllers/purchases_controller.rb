@@ -5,13 +5,14 @@ class PurchasesController < ApplicationController
     @purchase = Purchase.create(purchase_params)
 
     if @purchase.valid?
-      key = "purchases:#{@purchase.user_id}:#{@purchase.content_type}:#{@purchase.content_id}"
+      key = "purchases:#{@purchase.user_id}:"\
+            "#{@purchase.content_type}:#{@purchase.content_id}"
       REDIS.set(key, {
                   title: @purchase.content.title,
-                  expiry: @purchase.expire_at
+                  expiry: @purchase.expire_at.to_i
                 },
                 ex: Purchase::EXPIRY_DURATION)
-      end
+    end
   end
 
   def purchase_params
