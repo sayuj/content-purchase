@@ -214,4 +214,60 @@ RSpec.describe 'Purchase API', type: :request do
       end
     end
   end
+
+  context 'cache movie purchases in Redis' do
+    let(:params) do
+      {
+        "user_id": user.id,
+        "content_type": 'movie',
+        "content_id": movie1.id,
+        "purchase_option_id": purchase_option.id
+      }
+    end
+
+    before do
+      allow(Time).to receive(:now).and_return(Time.now)
+    end
+
+    it 'caches the purchase in Redis' do
+      expect_any_instance_of(Redis).to receive(:set).with(
+        "purchases:#{user.id}:Movie:#{movie1.id}",
+        {
+          title: movie1.title,
+          expiry: Purchase::EXPIRY_DURATION.from_now
+        },
+        ex: Purchase::EXPIRY_DURATION
+      )
+
+      post purchases_path, params: params
+    end
+  end
+
+  context 'cache season purchases in Redis' do
+    let(:params) do
+      {
+        "user_id": user.id,
+        "content_type": 'season',
+        "content_id": season1.id,
+        "purchase_option_id": purchase_option.id
+      }
+    end
+
+    before do
+      allow(Time).to receive(:now).and_return(Time.now)
+    end
+
+    it 'caches the purchase in Redis' do
+      expect_any_instance_of(Redis).to receive(:set).with(
+        "purchases:#{user.id}:Season:#{season1.id}",
+        {
+          title: season1.title,
+          expiry: Purchase::EXPIRY_DURATION.from_now
+        },
+        ex: Purchase::EXPIRY_DURATION
+      )
+
+      post purchases_path, params: params
+    end
+  end
 end
