@@ -7,7 +7,7 @@ class LibrariesController < ApplicationController
       @library << JSON.parse(REDIS.get(key))
     end
 
-    @library.sort_by! { |element| element[:expiry] }
+    @library.sort_by! { |element| element['expiry'] }
     render json: @library
   end
 

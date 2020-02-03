@@ -230,7 +230,7 @@ RSpec.describe 'Purchase API', type: :request do
     end
 
     it 'caches the purchase in Redis' do
-      expect_any_instance_of(Redis).to receive(:set).with(
+      expect(REDIS).to receive(:set).with(
         "purchases:#{user.id}:Movie:#{movie1.id}",
         {
           title: movie1.title,
@@ -258,7 +258,7 @@ RSpec.describe 'Purchase API', type: :request do
     end
 
     it 'caches the purchase in Redis' do
-      expect_any_instance_of(Redis).to receive(:set).with(
+      expect(REDIS).to receive(:set).with(
         "purchases:#{user.id}:Season:#{season1.id}",
         {
           title: season1.title,
