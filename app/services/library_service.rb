@@ -30,5 +30,7 @@ class LibraryService < ApplicationService
 
   def user
     @user ||= User.find(user_id)
+  rescue ActiveRecord::RecordNotFound
+    fail!('Invalid user')
   end
 end

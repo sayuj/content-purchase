@@ -7,4 +7,8 @@ class ApplicationService
 
   # Implement in derived classes
   def initialize(*_args); end
+
+  def fail!(message)
+    raise CustomException, message
+  end
 end

@@ -75,9 +75,19 @@ RSpec.describe 'Library API', type: :request do
     ]
   end
 
-  it 'returns library of the user' do
-    get user_library_path(user)
+  context 'valid user' do
+    it 'returns library of the user' do
+      get user_library_path(user)
 
-    expect(json_response).to eq expected_response
+      expect(json_response).to eq expected_response
+    end
+  end
+
+  context 'invalid user / no user present' do
+    it 'returns an error message' do
+      get user_library_path('abc')
+
+      expect(json_response['error']).to eq 'Invalid user'
+    end
   end
 end

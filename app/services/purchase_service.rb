@@ -23,7 +23,8 @@ class PurchaseService < ApplicationService
 
   def cache_key
     "purchases:#{purchase.user_id}:"\
-      "#{purchase.content_type}:#{purchase.content_id}"
+      "#{purchase.content_type}:"\
+      "#{purchase.content_id}"
   end
 
   def cache_data
@@ -44,7 +45,7 @@ class PurchaseService < ApplicationService
 
   def purchase_params
     @purchase_params ||= begin
-                           params.permit(
+                           purchase_params = params.permit(
                              :user_id,
                              :content_type,
                              :content_id,
